@@ -82,12 +82,13 @@ class db_operation():
         # add a marker for for highest volumn or incident number
         if self.dbName == 'Incidents':
             folium.Marker([df['Latitude'].iloc[0], df['Longitude'].iloc[0]], popup = 'Highest number of incidents').add_to(map)
-        else:
+        elif self.dbName == 'Volumes':
             s = df['the_geom'].iloc[0].split()
-            latitude_start = float(s[2].strip(","))
-            longitude_start = float(s[1].strip("(("))
-            latitude_end = float(s[4].strip(",))"))
-            longitude_end = float(s[3])
+            latitude_start = float(s[2].strip(",)("))
+            longitude_start = float(s[1].strip(",)("))
+            index_endpoint = len(s)-1
+            latitude_end = float(s[index_endpoint].strip(",)("))
+            longitude_end = float(s[index_endpoint-1].strip(",)("))
             # add start point marker
             folium.Marker([latitude_start, longitude_start], popup = 'Highest volume start point').add_to(map)
             # add end point marker
