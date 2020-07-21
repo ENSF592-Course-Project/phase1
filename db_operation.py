@@ -33,7 +33,10 @@ class db_operation():
             cursor=collection.find({'START_DT': {'$regex':year}})
             entries = list(cursor)
             df = pd.DataFrame(entries)
-            df=df.groupby(['INCIDENT INFO','Longitude','Latitude'])['Count'].sum().reset_index()
+            # df=df.groupby(['INCIDENT INFO','Longitude','Latitude'])['Count'].sum().reset_index()
+            # longitude and latitude slightly varies, so group by those will return inaccurate results
+            df = df.groupby('INCIDENT INFO').agg({'Longitude':'mean','Latitude':'mean', 'Count':'sum'}).reset_index()
+
             if(sort):
                 df.sort_values(by=['Count'], inplace=True, ascending=False)
         else:
@@ -44,7 +47,6 @@ class db_operation():
     def analyze_top_volumes(self):
         YearList = [2016, 2017, 2018]
         MaxVolumeList=[]
-        SecNameList=[]
         db=self.cluster["Volumes"]
         for i in YearList:
             collection = db["Volumes" + "_" + str(i)]
@@ -53,7 +55,6 @@ class db_operation():
             df = pd.DataFrame(entries,columns= ['secname', '_id','year_vol','the_geom','length_m','volume'])
             df.sort_values(by = ['volume'], inplace=True, ascending=False)
             MaxVolumeList.append(int(df.iloc[0,-1]))
-            SecNameList.append(df.iloc[0,0])
         return MaxVolumeList
     
 
@@ -66,7 +67,7 @@ class db_operation():
             cursor=collection.find({'START_DT': {'$regex':str(i)}})
             entries = list(cursor)
             df = pd.DataFrame(entries)
-            df = df.groupby(['INCIDENT INFO','Longitude','Latitude'])['Count'].sum().reset_index()
+            df = df.groupby('INCIDENT INFO').agg({'Longitude':'mean','Latitude':'mean', 'Count':'sum'}).reset_index()
             df.sort_values(by = ['Count'], inplace=True, ascending=False)
             MaxAccidentCountsList.append(int(df.iloc[0,-1]))
         return MaxAccidentCountsList
