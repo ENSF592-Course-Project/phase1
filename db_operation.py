@@ -59,7 +59,7 @@ class db_operation():
     
 
     def analyze_top_accidents(self):
-        YearList = [2016,2017,2018, 2019, 2020]
+        YearList = [2016,2017,2018]
         MaxAccidentCountsList = []
         db = self.cluster[self.dbName]
         collection = db[self.collectionName]

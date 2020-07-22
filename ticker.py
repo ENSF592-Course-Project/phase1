@@ -200,7 +200,7 @@ def volume_plot(volume, ax1):
 
 def accident_plot(Max_Accident_List, ax2):
     # plot DataFrame highest accident count vs. year
-    YearList = [2016,2017,2018, 2019, 2020]
+    YearList = [2016,2017,2018]
     Data = {'Year': YearList, 'Max_Accident_Counts': Max_Accident_List}
     df = pd.DataFrame(Data, columns = ['Year','Max_Accident_Counts'])
     ax2.set_xticks(YearList) 
