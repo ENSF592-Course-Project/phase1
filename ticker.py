@@ -63,7 +63,7 @@ def addLabel(text, row, height):
 
 
 type_combobox = addComboBox('select a type', 1, ('Traffic Vol','Traffic Accident'))
-year_combobox = addComboBox('select a year', 2, (' 2016',' 2017',' 2018', ' 2019', ' 2020'))
+year_combobox = addComboBox('select a year', 2, (' 2016',' 2017',' 2018'))
 read_button = addButton("Read",     3, lambda: onclick(msg, type = "Read"),"#A8EDF3")
 sort_button = addButton("Sort",     4, lambda: onclick(msg, type = "Sort"),"#A8EDF3")
 analysis_button = addButton("Analysis", 5, lambda: onclick(msg, type = "Analysis"),"#A8EDF3")
@@ -78,7 +78,7 @@ msg.grid(row = 8, column = 40)
 figure, (ax1, ax2) = plt.subplots(nrows=1, ncols=2, figsize=(50,100))
 
 def onclick(msg, type):
-    # assign mangoDB database name and collection name
+    # assign mongoDB database name and collection name
     if(type_combobox.get().strip() == 'Traffic Vol'):
         dbname = 'Volumes'
         year = str(year_combobox.get().strip())
