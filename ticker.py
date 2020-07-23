@@ -43,11 +43,7 @@ def addComboBox(text, row, options):
     comboItems.set(text)
     comboItems['values'] = options
     comboItems.grid(column = 40, row = row, pady=5) 
-    style = ttk.Style()
 
-    style.map('comboItems', fieldbackground=[('readonly','white')])
-    style.map('comboItems', selectbackground=[('readonly', 'white')])
-    style.map('comboItems', selectforeground=[('readonly', 'black')])
     return comboItems
 
 
