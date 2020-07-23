@@ -165,7 +165,8 @@ def msg_display(data_type, year, action_type):
                 msg.config(bg = "red")
     elif data_type == 'Incidents':
         if year == 'select a year':
-            return 'Please select year\n'
+            msg.insert(tk.END, 'Please select year\n')
+            msg.config(bg = "red")
         else:
             if action_type == 'Read':
                 msg.insert(tk.END, 'Successfully read from DB\n')
