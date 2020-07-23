@@ -25,19 +25,19 @@ class db_operation():
         if(self.dbName == 'Volumes'):
             cursor = collection.find()
             entries = list(cursor)
-            df = pd.DataFrame(entries, columns= ['secname','year_vol','the_geom','length_m','volume'])
+            df = pd.DataFrame(entries, columns= ['secname','year_vol','the_geom','volume'])
             df = df.set_index('secname')
             if(sort):
                 df.sort_values(by = ['volume'], inplace = True, ascending = False)
         elif(self.dbName == 'Incidents'):
             cursor=collection.find({'START_DT': {'$regex':year}})
             entries = list(cursor)
-            df = pd.DataFrame(entries)
+            df = pd.DataFrame(entries, columns= ['INCIDENT INFO','Longitude','Latitude','Count'])
             # df=df.groupby(['INCIDENT INFO','Longitude','Latitude'])['Count'].sum().reset_index()
             # longitude and latitude slightly varies, so group by those will return inaccurate results
-            df = df.groupby('INCIDENT INFO').agg({'Longitude':'mean','Latitude':'mean', 'Count':'sum'}).reset_index()
 
             if(sort):
+                df = df.groupby('INCIDENT INFO').agg({'Longitude':'mean','Latitude':'mean', 'Count':'sum'}).reset_index()
                 df.sort_values(by=['Count'], inplace=True, ascending=False)
         else:
             return
